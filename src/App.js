@@ -16,7 +16,6 @@ function App() {
   function matchingArrays(e) {
     if (!logicStart) return;
     mimicArray.push(parseInt(e.target.id));
-    console.log(mimicArray, patternArray);
     let lastEntry = mimicArray.length - 1;
     if (mimicArray[lastEntry] !== patternArray[lastEntry]) {
       document.getElementById('start-btn').style.display = 'block';
@@ -24,14 +23,10 @@ function App() {
       setPatternArray([]);
       setLogicStart(false);
       setScore(`Score: ${patternArray.length - 1}`)
-      console.log('restarting')
     } else {
       if (mimicArray.length !== patternArray.length) {
-        console.log(mimicArray[lastEntry], patternArray[lastEntry])
-        console.log(mimicArray.length, patternArray.length, 'different length arrays');
         return;
       } else {
-        console.log('same length arrays');
         gameLogic();
       }
     }
@@ -46,7 +41,6 @@ function App() {
       setMimicArray([]);
       document.getElementById(patternArray[i]).style.backgroundColor = 'black';
       setTimeout(() => {
-        // console.log(patternArray);
         if (patternArray[i] === 0) {
           document.getElementById(0).style.backgroundColor = 'red';
         } else if (patternArray[i] === 1) {
