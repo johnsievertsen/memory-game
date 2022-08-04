@@ -7,28 +7,63 @@ function App() {
   const [logicStart, setLogicStart] = useState(false);
   const [score, setScore] = useState('Start');
 
+  function resetGameData() {
+    document.getElementById('start-btn').style.display = 'block';
+    setMimicArray([]);
+    setPatternArray([]);
+    setLogicStart(false);
+  }
+
+  function checkArrayLengths() {
+    if (mimicArray.length !== patternArray.length) {
+      return;
+    } else {
+      setTimeout(() => {gameLogic();}, 450);
+    }
+  }
+
+  function getLastEntryIndex() {
+    let lastEntry = mimicArray.length - 1;
+    return lastEntry;
+  }
+
   function handleStart(e) {
     e.target.style.display = 'none';
     setLogicStart(true);
     gameLogic();
   }
 
+  function changeStyleOnClick(e) {
+    const originalStyle = e.target.style
+    switch (e.target.id) {
+      case '0': 
+        e.target.style.backgroundColor = "rgb(255, 88, 88)";
+        setTimeout(() => {e.target.style = originalStyle;}, 250);
+        break;
+      case '1':
+        e.target.style.backgroundColor = "rgb(0, 190, 0)";
+        setTimeout(() => {e.target.style = originalStyle;}, 250);
+        break;
+      case '2':
+        e.target.style.backgroundColor = "rgb(93, 93, 255)";
+        setTimeout(() => {e.target.style = originalStyle;}, 250);
+        break;
+      case '3':
+        e.target.style.backgroundColor = "rgb(255, 255, 149)";
+        setTimeout(() => {e.target.style = originalStyle;}, 250);
+        break;
+    }
+  }
+
   function matchingArrays(e) {
     if (!logicStart) return;
+    changeStyleOnClick(e);
     mimicArray.push(parseInt(e.target.id));
-    let lastEntry = mimicArray.length - 1;
-    if (mimicArray[lastEntry] !== patternArray[lastEntry]) {
-      document.getElementById('start-btn').style.display = 'block';
-      setMimicArray([]);
-      setPatternArray([]);
-      setLogicStart(false);
+    if (mimicArray[getLastEntryIndex()] !== patternArray[getLastEntryIndex()]) {
+      resetGameData();
       setScore(`Score: ${patternArray.length - 1}`)
     } else {
-      if (mimicArray.length !== patternArray.length) {
-        return;
-      } else {
-        gameLogic();
-      }
+      checkArrayLengths();
     }
   }
 
